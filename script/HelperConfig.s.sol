@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
+import {LinkToken} from "test/mocks/LinkToken.sol";
 
 abstract contract CodeConstans {
     /* VRF coordinator Constants */
@@ -10,7 +11,7 @@ abstract contract CodeConstans {
     uint96 MOCK_GAS_PRICE = 1e9;
     int256 MOCK_WEI_PER_UNIT_LINK = 4e15;
 
-    uint256 public constant ETH_SEPOLIA_CHAIN_ID = 11155111;
+    uint256 public constant ETH_SEPOLIA_CHAIN_ID = 11155111; 
     uint256 public constant LOCAL_CHAIN_ID = 31337;
 }
 
@@ -26,6 +27,7 @@ contract HelperConfig is Script, CodeConstans {
         uint256 subscriptionId;
         uint32 callbackGasLimit;
         address link;
+        address account;
     }
 
     NetworkConfig public localNetworkConfig;
@@ -55,9 +57,10 @@ contract HelperConfig is Script, CodeConstans {
             interval: 30,
             vrfCoordinator: 0x5C210eF41CD1a72de73bF76eC39637bB0d3d7BEE,
             gasLane: 0x9e1344a1247c8a1785d0a4681a27152bffdb43666ae5bf7d14d24a5efd44bf71,
-            subscriptionId: 0,
+            subscriptionId: 6199557820981354385061421748815642714249214054164057588758929864545791926519,
             callbackGasLimit: 500000,
-            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789
+            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
+            account: 0xc889C3E715bBEf26c39472c8EAF9146c699dB054
         });
     }
 
@@ -72,6 +75,7 @@ contract HelperConfig is Script, CodeConstans {
             MOCK_GAS_PRICE,
             MOCK_WEI_PER_UNIT_LINK
         );
+        LinkToken linkToken = new LinkToken();
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({
@@ -80,9 +84,12 @@ contract HelperConfig is Script, CodeConstans {
             vrfCoordinator: address(vrfCoordinatorMock),
             gasLane: 0x9e1344a1247c8a1785d0a4681a27152bffdb43666ae5bf7d14d24a5efd44bf71,
             subscriptionId: 0,
-            callbackGasLimit: 500000
+            callbackGasLimit: 500000,
+            link: address(linkToken),
+            account: 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
         });
         return localNetworkConfig;
     }
+    
 
 }

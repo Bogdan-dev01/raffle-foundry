@@ -1,66 +1,158 @@
-## Foundry
+# 🎲 Raffle Smart Contract (Foundry Project)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A decentralized lottery smart contract built with **Solidity + Foundry** using:
 
-Foundry consists of:
+* Chainlink VRF (verifiable randomness)
+* Chainlink Automation (Keepers)
+* Full Foundry test suite with mocks
+* Deployment & interaction scripts
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+This project was created as part of learning smart contract security,
+testing, and Chainlink integrations.
 
-## Documentation
+---
 
-https://book.getfoundry.sh/
+# ⚙️ Installation & Setup
 
-## Usage
+## 1. Install Foundry (if not installed)
 
-### Build
-
-```shell
-$ forge build
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
 ```
 
-### Test
+---
 
-```shell
-$ forge test
+## 2. Clone repository
+
+```bash
+git clone https://github.com/Bogdan-dev01/raffle-foundry.git
+cd <repo-folder>
 ```
 
-### Format
+---
 
-```shell
-$ forge fmt
+## 3. Install dependencies
+
+The `lib/` folder is ignored in GitHub, so you must install dependencies manually:
+
+```bash
+forge install
 ```
 
-### Gas Snapshots
+This installs:
 
-```shell
-$ forge snapshot
+* forge-std
+* Chainlink contracts
+* other required libraries
+
+---
+
+## 4. Build project
+
+```bash
+forge build
 ```
 
-### Anvil
+---
 
-```shell
-$ anvil
+## 5. Run tests
+
+```bash
+forge test -vvvv
 ```
 
-### Deploy
+---
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+## 6. Coverage (optional)
+
+```bash
+forge coverage
 ```
 
-### Cast
+---
 
-```shell
-$ cast <subcommand>
+# 🔑 Environment Variables (optional for deployment)
+
+If you plan to deploy to a real network:
+
+Create `.env` file:
+
+```bash
+PRIVATE_KEY=your_private_key
+RPC_URL=your_rpc_url
+ETHERSCAN_API_KEY=optional
 ```
 
-### Help
+⚠️ Never commit `.env` to GitHub.
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+---
+
+# 🚀 Deploy Scripts
+
+Example deployment:
+
+```bash
+forge script script/DeployRaffle.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
 ```
+
+---
+
+# 🧪 Project Structure
+
+```
+src/        → Smart contracts
+script/     → Deploy + interaction scripts
+test/       → Unit tests
+lib/        → Dependencies (ignored in git)
+broadcast/  → Deploy history (ignored)
+```
+
+---
+
+# 🔗 Chainlink Integration Overview
+
+### VRF
+
+Used for provably random winner selection.
+
+### Automation (Keepers)
+
+Automatically triggers winner selection when:
+
+* enough time passed
+* players entered
+* contract funded
+
+---
+
+# 🛠 Tech Stack
+
+* Solidity 0.8.19
+* Foundry
+* Chainlink VRF v2.5 mocks
+* Forge testing framework
+
+---
+
+# 📚 Learning Goals of This Project
+
+* Smart contract testing (unit + mocks)
+* Chainlink VRF integration
+* Automation/Keeper logic
+* Security-oriented development workflow
+* Foundry scripting & deployment flow
+
+---
+
+# ⚠️ Notes
+
+This project is educational and not production audited.
+Do not use in production without a professional audit.
+
+---
+
+# 👨‍💻 Author
+
+Solidity / Smart Contract Security learner
+Focused on auditing, testing, and DeFi security.
