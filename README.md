@@ -27,7 +27,7 @@ foundryup
 
 ```bash
 git clone https://github.com/Bogdan-dev01/raffle-foundry.git
-cd <repo-folder>
+cd raffle-foundry
 ```
 
 ---
